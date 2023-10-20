@@ -8,9 +8,9 @@ class TranslationalState extends IState {
   }
 
   
-  enter({ scene, dataStructure3D }) {
+  enter({ dataStructure3D }) {
     this.dataStructure3D = dataStructure3D;
-    this.dataStructure3D.render(scene);
+
   }
 
 

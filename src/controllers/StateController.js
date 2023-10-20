@@ -9,10 +9,13 @@
 class StateController {
   myApp;
   axisNode;
-
-    constructor(myAppInstance, axisNode) {
+  octree;
+  dataStructure3D;
+    constructor(myAppInstance, axisNode, octree, graph) {
       this.myApp = myAppInstance;
       this.axisNode = axisNode;
+      this.octree = octree;
+      this.dataStructure3D = graph;
       document.addEventListener('keyup', this.handleKeyPress);
     }
   
@@ -32,6 +35,7 @@ class StateController {
 
         this.myApp.changeState('ROTATIONAL');
         this.axisNode.setColor(0xff0000);
+       this.myApp.dispatch('enter', [{ dataStructure3D: this.dataStructure3D }]);
       }
 
       else if(event.key === 'S' || event.key === 's') {
@@ -43,6 +47,13 @@ class StateController {
       else if(event.key === 'T' || event.key === 't') {
         this.myApp.changeState('TRANSLATIONAL');
         this.axisNode.setColor(0x0000ff);
+        this.myApp.dispatch('enter', [{ octree : this.octree , dataStructure3D: this.dataStructure3D }]);
+      }
+
+      else if(event.key === 'F' || event.key === 'f') {
+        this.myApp.changeState('FLEX');
+        this.axisNode.setColor(0x00ff00);
+        this.myApp.dispatch('enter', [{ octree : this.octree , dataStructure3D: this.dataStructure3D }]);
       }
     }
   }

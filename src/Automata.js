@@ -2,6 +2,7 @@ import StaticState from "./states/StaticState";
 import IFiniteStateMachine from "./IFiniteStateMachine";
 import RotationalState from "./states/RotationalState";
 import TranslationalState from "./states/TranslationalState";
+import FlexState from "./states/FlexState";
 
 /**
  * This class represents the main application.
@@ -16,8 +17,9 @@ class Automata extends IFiniteStateMachine {
       INITIAL: new StaticState(),
       ROTATIONAL: new RotationalState(),
       TRANSLATIONAL: new TranslationalState(),
-      FLEX: null,
+      FLEX: new FlexState(),
     };
+    
   }
   
   dispatch(actionName, ...args) {

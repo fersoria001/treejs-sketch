@@ -42,9 +42,13 @@ function createCubeAndConnectFaces(graph) {
   
     // Connect front face vertices
     graph.connectNodes(graph._nodes[0], graph._nodes[1], 0x0000ff, 0.05);
-    graph.connectNodes(graph._nodes[0], graph._nodes[2], 0x0000ff, 0.05);
-    graph.connectNodes(graph._nodes[1], graph._nodes[3], 0x0000ff, 0.05);
+    
     graph.connectNodes(graph._nodes[2], graph._nodes[3], 0x0000ff, 0.05);
+
+    graph.connectNodes(graph._nodes[0], graph._nodes[2], 0x0000ff, 0.05);
+    
+    graph.connectNodes(graph._nodes[1], graph._nodes[3], 0x0000ff, 0.05);
+   
     //connect backface
     graph.connectNodes(graph._nodes[4], graph._nodes[5], 0x0000ff, 0.05);
     graph.connectNodes(graph._nodes[4], graph._nodes[6], 0x0000ff, 0.05);

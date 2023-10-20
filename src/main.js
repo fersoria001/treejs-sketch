@@ -8,8 +8,12 @@ import DotGraph3D from "./data-structures/DotGraph3D";
 import Automata from "./Automata";
 import StateController from "./controllers/StateController";  
 import RotationalController from "./controllers/RotationalController";
-import TranslationalController from "./controllers/TranslationalController";
+import TranslationalController from "./controllers/TraslationalController";
+import FlexController from "./controllers/FlexController";
 import {createCubeAndConnectFaces, calculateCenter }from "./utils/createCube";
+
+
+
 const controls = new OrbitControls(camera, renderer.domElement);
 camera.position.set( 0, 5, 10 );
 const cameraHelper = new THREE.CameraHelper(camera);
@@ -25,9 +29,10 @@ const cubeCenter = calculateCenter();
 graph.add(cubeCenter.x,cubeCenter.y,cubeCenter.z,0x00ff00,0.2);
 const axisNode = graph.get(24); //get the center of the cube
 const automata = new Automata();
-const stateController = new StateController(automata,axisNode);
+const stateController = new StateController(automata,axisNode,octree,graph);
 const rotationalController = new RotationalController(automata,axisNode);
 const translationalController = new TranslationalController(automata,axisNode);
+const flexController = new FlexController(automata);
 automata.dispatch('enter', [{ octree : octree , dataStructure3D: graph }]);
 
 function animate() {

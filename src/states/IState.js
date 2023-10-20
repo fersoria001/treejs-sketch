@@ -1,6 +1,5 @@
 
 class IState {
-
   /**
    * This methods is intended to  set the graphics, often
    * only sets the structure that we want to render

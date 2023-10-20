@@ -1,5 +1,6 @@
 import Dot from "../shapes/Dot.js";
 import Edge from "../shapes/Edge.js";
+import * as THREE from "three";
 
 /**
  * This class represents a graph of dots in 3D space using a traditional adjacency list.
@@ -17,7 +18,8 @@ class DotGraph3D {
   _nodes;
   _edges;
   _adjacencyList;
-
+  _currentIndex = 0;
+  _currentEdge;
   constructor() {
     this._nodes = [];
     this._edges = [];
@@ -36,7 +38,7 @@ class DotGraph3D {
    * @param {number} size - The size of the dot could be an integer or a double.
    */
   add(x, y, z, color, size) {
-    const newNode = new Dot(x,y,z ,color, size);
+    const newNode = new Dot(x, y, z, color, size);
     this._nodes.push(newNode);
     this._adjacencyList.push([]);
   }
@@ -120,7 +122,7 @@ class DotGraph3D {
   /**
    * This method accept an index and returns the node at that index.
    * @param {number} index - An integer representing the index of the node.
-   * @returns {Dot || null} - The node at the given index or null if the index is out of bounds. 
+   * @returns {Dot || null} - The node at the given index or null if the index is out of bounds.
    */
   get(index) {
     if (index >= 0 && index < this._nodes.length) {
@@ -129,35 +131,35 @@ class DotGraph3D {
     return null;
   }
 
-/**
- * Utility method to transverse the nodes
- * without violating encapsulation may change in future
- * 
- * @param {*} callback 
- */
-forEachNode(callback) {
-  this._nodes.forEach((node, index) => {
-    // For each node in _nodes, call the provided callback function.
-    // Pass the node and its index as arguments to the callback.
-    callback(node, index);
-  });
-}
-/**
- * Utility method to transverse the edges
- * without violating encapsulation may change in future
- * @param {*} callback 
- */
-forEachEdge(callback) {
-  this._edges.forEach((edge, index) => {
-    // For each edge in _edges, call the provided callback function.
-    // Pass the edge and its index as arguments to the callback.
-    callback(edge, index);
-  });
-}
+  /**
+   * Utility method to transverse the nodes
+   * without violating encapsulation may change in future
+   *
+   * @param {*} callback
+   */
+  forEachNode(callback) {
+    this._nodes.forEach((node, index) => {
+      // For each node in _nodes, call the provided callback function.
+      // Pass the node and its index as arguments to the callback.
+      callback(node, index);
+    });
+  }
+  /**
+   * Utility method to transverse the edges
+   * without violating encapsulation may change in future
+   * @param {*} callback
+   */
+  forEachEdge(callback) {
+    this._edges.forEach((edge, index) => {
+      // For each edge in _edges, call the provided callback function.
+      // Pass the edge and its index as arguments to the callback.
+      callback(edge, index);
+    });
+  }
   /**
    * This method adds the _nodes and _edges to the actual octree
-   * 
-   * 
+   *
+   *
    */
   addToOctree(octree) {
     this._nodes.forEach((node) => {
@@ -168,6 +170,49 @@ forEachEdge(callback) {
       octree.add(edge);
     });
   }
-}
 
+  /**
+   * This method moves the current node to the next node in the graph.
+   * If the current node is the last node in the graph, the current node remains the same.
+   */
+  next() {
+    if (this._currentIndex < this._edges.length - 1) {
+      this._currentIndex++;
+      this.updateEdgeColor();
+      return this._edges[this._currentIndex];
+    }
+    return null;
+  }
+
+  /**
+   * This method moves the current node to the previous node in the graph.
+   * If the current node is the first node in the graph, the current node remains the same.
+   */
+  prev() {
+    if (this._currentIndex > 0) {
+      this._currentIndex--;
+      this.updateEdgeColor();
+      return this._edges[this._currentIndex];
+    }
+    return null;
+  }
+
+  /**
+   * This method updates the color of the current edge and the previous edge.
+   */
+  updateEdgeColor() {
+    if (this._currentEdge) {
+      console.log("habia uno previo se camibara a blanco");
+      this._currentEdge.edge.material.color.setHex(0x0000ff);
+    }
+    this._currentEdge = this._edges[this._currentIndex];
+    if (this._currentEdge) {
+      this._currentEdge.edge.material.color.setHex(0xffff00);
+    }
+  }
+
+
+
+
+}
 export default DotGraph3D;
