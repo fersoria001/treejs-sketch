@@ -24,10 +24,14 @@ class Dot {
   y;
   z;
 
-  constructor(x , y , z , color = 0xff0000, size = 0.05) {
+  constructor(x , y , z  , color = 0xff0000, size = 1) {
     this.x = x;
     this.y = y;
     this.z = z;
+    console.log("x", x);
+    console.log("y", y);
+    console.log("z", z);
+    console.log("color", color);
     this.geometry = new THREE.BufferGeometry();
     const vertices = new Float32Array([x, y, z]);
     this.geometry.setAttribute(
@@ -36,12 +40,9 @@ class Dot {
     );
     this.material = new THREE.PointsMaterial({ color, size });
     this.points = new THREE.Points(this.geometry, this.material);
-    this.axis = new THREE.Vector3(x, y, z);
-    this.next = null;
-    this.points.geometry.computeBoundingSphere();
-    this.points.geometry.computeBoundingBox();
-    this.boundingSphere = this.points.geometry.boundingSphere;
-    this.boundingBox = this.points.geometry.boundingBox;
+    // this.axis = new THREE.Vector3(x, y, z);
+    // this.next = null;
+
   }
 
   /**
@@ -74,3 +75,9 @@ class Dot {
 }
 
 export default Dot;
+
+
+    // this.points.geometry.computeBoundingSphere();
+    // this.points.geometry.computeBoundingBox();
+    // this.boundingSphere = this.points.geometry.boundingSphere;
+    // this.boundingBox = this.points.geometry.boundingBox;
